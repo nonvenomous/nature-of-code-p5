@@ -35,7 +35,19 @@ export default function sketch(p: p5) {
     }
 
     step() {
-      this.strategyGaussianRandomWalk();
+      this.levyFlight();
+    }
+
+    levyFlight() {
+      const r = p.random();
+
+      // 1 percent chance to take a big step
+      if (r < 0.01) {
+        this.x += p.random(-50, 50);
+        this.y += p.random(-50, 50);
+      } else {
+        this.strategyNormalDistribution();
+      }
     }
 
     strategyGaussianRandomWalk() {
@@ -43,7 +55,6 @@ export default function sketch(p: p5) {
       this.y += p.randomGaussian();
     }
 
-    // TODO Check for solution
     strategyRandomFollowMouse() {
       const r = p.random(1);
 
