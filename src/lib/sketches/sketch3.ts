@@ -2,6 +2,12 @@ import type p5 from 'p5';
 
 // This sketch illustrates a possible way of interactions between the Svelte app and the P5 scripts
 
+export type SketchData = {
+  x: number;
+  y: number;
+  color: string;
+};
+
 /**
  * P5JS Sketch
  * @param p Instance mode
@@ -12,8 +18,8 @@ import type p5 from 'p5';
 export default function sketch(
   p: p5,
   P5: p5,
-  data: { [key: string]: any },
-  onUpdate: (data: { [key: string]: any }) => void,
+  data: SketchData,
+  onUpdate: (data: SketchData) => void,
 ) {
   p.setup = function () {
     const canvas = p.createCanvas(600, 100);

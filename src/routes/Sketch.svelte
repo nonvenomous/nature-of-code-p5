@@ -17,12 +17,17 @@
   onDestroy(() => p5Instance.remove());
 
   let getInstance = async () => {
-    const sketches = import.meta.glob(`$lib/sketches/sketch*.ts`, { eager: true });
-    // console.log(sketches);
+    // get sketch to render
+    const sketches = import.meta.glob(`$lib/sketches/*.ts`, { eager: true });
+    // console.log('🚀 ~ getInstance ~ sketches:', sketches);
+    // console.log(`Loading: ${`/src/lib/sketches/${name}.ts`}`);
+    // @ts-ignore
     const sketch = sketches[`/src/lib/sketches/${name}.ts`].default;
+
     const sketchCanvas = document.getElementById(`canvas-${sketchId}`);
     if (!sketchCanvas) throw new Error('sketchCanvas missing');
-    console.log('sketch', sketch);
+
+    // console.log('sketch', sketch);
     p5Instance = new p5((p: p5) => sketch(p, p5, data, onUpdate), sketchCanvas);
   };
 
@@ -45,6 +50,8 @@
 </script>
 
 <div>
+  <p>{name}</p>
+
   <div class="inline-block" id={`canvas-${sketchId}`}></div>
   <div>
     <button on:click={togglePause}>
