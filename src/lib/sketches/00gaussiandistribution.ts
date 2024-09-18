@@ -47,6 +47,6 @@ export default function sketch(p: p5) {
     }
     p.circle(x, middleYHeight, 32);
 
-    if (p.frameCount % 10000 === 0) console.log(`frame: ${p.frameCount}`);
+    // if (p.frameCount % 10000 === 0) console.log(`frame: ${p.frameCount}`);
   };
 }

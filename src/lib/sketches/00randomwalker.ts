@@ -20,6 +20,8 @@ export default function sketch(p: p5) {
     walker.step();
     walker.show();
   };
+
+  // TODO add constraints p.constrain
   class Walker {
     x: number;
     y: number;
@@ -35,7 +37,28 @@ export default function sketch(p: p5) {
     }
 
     step() {
-      this.levyFlight();
+      this.customDistribution();
+    }
+
+    // accept-reject algorithm
+    customDistribution() {
+      const xStep = this.getRandomQualifiedValue() * 5;
+      const yStep = this.getRandomQualifiedValue() * 5;
+      console.log({ xStep, yStep });
+      this.x += p.random(-xStep, xStep);
+      this.y += p.random(-yStep, yStep);
+    }
+
+    private getRandomQualifiedValue(): number {
+      const r1 = p.random();
+      const probability = r1;
+      const r2 = p.random();
+
+      if (r2 < probability) {
+        return r1;
+      }
+
+      return this.getRandomQualifiedValue();
     }
 
     levyFlight() {
