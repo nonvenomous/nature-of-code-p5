@@ -40,20 +40,27 @@ export default function sketch(p: p5) {
       this.customDistribution();
     }
 
-    // accept-reject algorithm
     customDistribution() {
-      const xStep = this.getRandomQualifiedValue() * 5;
-      const yStep = this.getRandomQualifiedValue() * 5;
+      const xStep = this.getRandomQualifiedValue();
+      const yStep = this.getRandomQualifiedValue();
       console.log({ xStep, yStep });
       this.x += p.random(-xStep, xStep);
       this.y += p.random(-yStep, yStep);
     }
 
+    // TODO investigate this revision
     private getRandomQualifiedValue(): number {
-      const r1 = p.random();
-      const probability = r1;
+      const maxValue = 10;
+      const r1 = p.random(maxValue);
+      const probability = (r1 * r1) / (maxValue * maxValue);
       const r2 = p.random();
 
+      console.log({
+        r1,
+        probability,
+        r2,
+        takeR1: r2 < probability,
+      });
       if (r2 < probability) {
         return r1;
       }
