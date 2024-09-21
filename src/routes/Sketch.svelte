@@ -52,7 +52,7 @@
 <div>
   <p>{name}</p>
 
-  <div class="inline-block" id={`canvas-${sketchId}`}></div>
+  <div class="flex justify-center" id={`canvas-${sketchId}`}></div>
   <div>
     <button on:click={togglePause}>
       {isPaused ? 'Resume' : 'Pause'}
