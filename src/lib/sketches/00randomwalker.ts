@@ -7,11 +7,13 @@ export default function sketch(p: p5) {
   let walker: Walker;
   const targetFrameRate = 120;
   const lastCoordinates = { x: 0, y: 0 };
+  const canvasHeight = 400;
+  const canvasWidth = 800;
 
   p.setup = function () {
     p.frameRate(targetFrameRate);
 
-    p.createCanvas(800, 400);
+    p.createCanvas(canvasWidth, canvasHeight);
     walker = new Walker(p.width, p.height);
     p.background(55);
   };
@@ -25,10 +27,14 @@ export default function sketch(p: p5) {
   class Walker {
     x: number;
     y: number;
+    timeX: number;
+    timeY: number;
 
     constructor(width: number, height: number) {
       this.x = width / 2;
       this.y = height / 2;
+      this.timeX = Math.random() * 1000;
+      this.timeY = Math.random() * 1000;
     }
 
     show() {
@@ -37,13 +43,29 @@ export default function sketch(p: p5) {
     }
 
     step() {
-      this.customDistribution();
+      this.perlinNoise();
+    }
+
+    // Exercise 0-7
+    perlinNoise() {
+      const xNoise = p.noise(this.timeX);
+      const yNoise = p.noise(this.timeY);
+
+      this.timeX += 0.005;
+      this.timeY += 0.005;
+
+      const xMapped = p.map(xNoise, 0, 1, 0, canvasWidth);
+      console.log('🚀 ~ Walker ~ perlinNoise ~ xMapped:', xMapped);
+      const yMapped = p.map(yNoise, 0, 1, 0, canvasHeight);
+      console.log('🚀 ~ Walker ~ perlinNoise ~ yMapped:', yMapped);
+      this.x = xMapped;
+      this.y = yMapped;
     }
 
     customDistribution() {
       const xStep = this.getRandomQualifiedValue();
       const yStep = this.getRandomQualifiedValue();
-      console.log({ xStep, yStep });
+      // console.log({ xStep, yStep });
       this.x += p.random(-xStep, xStep);
       this.y += p.random(-yStep, yStep);
     }
@@ -55,12 +77,12 @@ export default function sketch(p: p5) {
       const probability = (r1 * r1) / (maxValue * maxValue);
       const r2 = p.random();
 
-      console.log({
-        r1,
-        probability,
-        r2,
-        takeR1: r2 < probability,
-      });
+      // console.log({
+      //   r1,
+      //   probability,
+      //   r2,
+      //   takeR1: r2 < probability,
+      // });
       if (r2 < probability) {
         return r1;
       }
