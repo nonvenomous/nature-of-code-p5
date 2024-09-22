@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { GaussSplatterData } from '$lib/sketches/00gaussPaintSlatter';
+  import type { PerlinMandalaData } from '$lib/sketches/00perlinMandala';
   import type { SketchData } from '$lib/sketches/sketch3';
   import Sketch from './Sketch.svelte';
 
@@ -16,9 +17,31 @@
   };
 
   const gausPaintSplatterData: GaussSplatterData = $state({ colorSd: 30, coordinateSd: 60 });
+  const perlinMandala: PerlinMandalaData = $state({
+    frameRate: 120,
+    amount: 1,
+    strokeWeight: 0.1,
+    enableDarken: true,
+    enableTurning: false,
+  });
 </script>
 
 <main class="mx-auto max-w-[none] text-center">
+  <article>
+    <Sketch name="00perlinMandala" data={perlinMandala} />
+
+    <input type="range" min="1" max="120" bind:value={perlinMandala.frameRate} />
+    <input type="range" min="1" max="100" bind:value={perlinMandala.amount} />
+    <input type="range" min="0" max="1" step="0.05" bind:value={perlinMandala.strokeWeight} />
+    <input type="checkbox" bind:checked={perlinMandala.enableDarken} />
+    <input type="checkbox" bind:checked={perlinMandala.enableTurning} />
+    <div>FrameRate: {perlinMandala.frameRate}</div>
+    <div>Amount: {perlinMandala.amount}</div>
+    <div>strokeWeight: {perlinMandala.strokeWeight}</div>
+    <div>enableDarken: {perlinMandala.enableDarken}</div>
+    <div>enableTurning: {perlinMandala.enableTurning}</div>
+  </article>
+
   <article class="py-3">
     <Sketch name="00gaussPaintSlatter" data={gausPaintSplatterData} />
     <input type="range" min="0" max="300" bind:value={gausPaintSplatterData.coordinateSd} />
