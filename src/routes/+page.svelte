@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Perlin2DNoiseData } from '$lib/sketches/00-2DperlinNoise';
   import type { GaussSplatterData } from '$lib/sketches/00gaussPaintSlatter';
   import type { PerlinMandalaData } from '$lib/sketches/00perlinMandala';
   import type { SketchData } from '$lib/sketches/sketch3';
@@ -24,9 +25,38 @@
     enableDarken: true,
     enableTurning: false,
   });
+
+  const perlin2DData: Perlin2DNoiseData = $state({
+    xoffIncrementSize: 0.1,
+    yoffIncrementSize: 0.1,
+    lod: 6,
+    falloff: 0.25,
+    zoffIncrementSize: 0.1,
+  });
 </script>
 
 <main class="mx-auto max-w-[none] text-center">
+  <article>
+    <Sketch name="00-2DperlinNoise" data={perlin2DData} />
+    <input
+      type="range"
+      min="0.001"
+      max="1"
+      step="0.001"
+      bind:value={perlin2DData.xoffIncrementSize}
+    />
+    <input
+      type="range"
+      min="0.001"
+      max="1"
+      step="0.001"
+      bind:value={perlin2DData.yoffIncrementSize}
+    />
+    <input type="range" min="0" max="20" step="0.1" bind:value={perlin2DData.lod} />
+    <input type="range" min="0" max="3" step="0.025" bind:value={perlin2DData.falloff} />
+    <input type="range" min="0" max="1" step="0.02" bind:value={perlin2DData.zoffIncrementSize} />
+  </article>
+
   <article>
     <Sketch name="00perlinMandala" data={perlinMandala} />
 

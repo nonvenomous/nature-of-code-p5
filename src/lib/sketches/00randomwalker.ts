@@ -55,9 +55,9 @@ export default function sketch(p: p5) {
       this.timeY += 0.005;
 
       const xMapped = p.map(xNoise, 0, 1, 0, canvasWidth);
-      console.log('🚀 ~ Walker ~ perlinNoise ~ xMapped:', xMapped);
+      // console.log('🚀 ~ Walker ~ perlinNoise ~ xMapped:', xMapped);
       const yMapped = p.map(yNoise, 0, 1, 0, canvasHeight);
-      console.log('🚀 ~ Walker ~ perlinNoise ~ yMapped:', yMapped);
+      // console.log('🚀 ~ Walker ~ perlinNoise ~ yMapped:', yMapped);
       this.x = xMapped;
       this.y = yMapped;
     }
