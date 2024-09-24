@@ -10,58 +10,88 @@ export default function sketch(p: p5) {
   const canvasWidth = 500;
   const canvasHeight = 400;
 
-  const scale = 20;
-  const width = 800;
-  const height = 400;
-
-  const cols = width / scale;
-  const rows = height / scale;
-  let zTime = 0.0;
-
-  const OFF_SIZE = 0.1;
-  const Z_OFF_SIZE = 0.015;
+  let land: Terrain;
+  let theta = 0.0;
 
   p.setup = () => {
     p.createCanvas(canvasWidth, canvasHeight, 'webgl');
     p.frameRate(frameRate);
-    // p.noLoop();
 
-    p.stroke(55);
+    p.stroke(0);
 
-    // p.noFill()
-    // p.noStroke();
+    land = new Terrain(20, 800, 400);
   };
 
   p.draw = () => {
-    p.background(0); // clears screen
+    land.calculate();
+    p.background(55);
+    p.push();
+    p.translate(0, 20, -200);
+    p.rotateX(Math.PI / 3);
+    p.rotateZ(theta);
+    land.render();
+    p.pop();
 
-    p.push(); // Save the current transformation state
+    theta += 0.0025;
+  };
 
-    // Apply transformations
-    p.rotateX(Math.PI / 3); // camera angle
-    p.rotateZ(zTime / 5);
-    p.rotateZ(p.map(-p.mouseX, 0, canvasHeight, -Math.PI / 4, Math.PI / 4));
-    p.translate(-width / 2, -height / 2); // fixing coords
+  class Terrain {
+    scale: number;
+    width: number;
+    height: number;
+    widthHalf: number;
+    heightHalf: number;
 
-    let yoff = 0.0;
-    for (let y = 0; y < rows; y++) {
-      let xoff = 0.0;
-      p.beginShape(p.TRIANGLE_STRIP);
-      for (let x = 0; x <= cols; x++) {
-        const elevation = p.map(p.noise(xoff, yoff, zTime), 0, 1, -100, 100);
+    cols: number;
+    rows: number;
+    z: Float32Array[];
+    zoff: number = 0.0;
 
-        const color = p.map(elevation, -100, 100, 0, 150);
-        p.fill(color);
-        const elevation2 = p.map(p.noise(xoff, yoff + OFF_SIZE, zTime), 0, 1, -100, 100);
-        p.vertex(x * scale, y * scale, elevation);
-        p.vertex(x * scale, (y + 1) * scale, elevation2);
-        xoff += OFF_SIZE;
-      }
-      p.endShape();
-      yoff += OFF_SIZE;
+    constructor(scale: number, width: number, height: number) {
+      this.scale = scale; // size of each cell
+      this.width = width;
+      this.height = height;
+
+      this.widthHalf = width / 2;
+      this.heightHalf = height / 2;
+
+      this.cols = Math.floor(width / scale);
+      this.rows = Math.floor(height / scale);
+
+      this.z = Array.from({ length: this.cols }, () => new Float32Array(this.rows));
     }
 
-    p.pop(); // Restore the original transformation state
-    zTime += Z_OFF_SIZE;
-  };
+    calculate() {
+      let xoff = 0.0;
+      for (let col = 0; col < this.cols; col++) {
+        let yoff = 0.0;
+        for (let row = 0; row < this.rows; row++) {
+          const noise = p.noise(xoff, yoff, this.zoff);
+          this.z[col][row] = p.map(noise, 0, 1, -120, 120);
+          yoff += 0.1;
+        }
+        xoff += 0.1;
+      }
+      this.zoff += 0.01;
+    }
+
+    render() {
+      for (let x = 0; x < this.z.length - 1; x++) {
+        p.beginShape(p.QUAD_STRIP);
+        for (let y = 0; y < this.z[x].length; y++) {
+          const currentElevation = this.z[x][y];
+          const nextElevation = this.z[x + 1][y];
+          const currentShade = p.map(currentElevation, -120, 120, 0, 255);
+
+          p.fill(currentShade, 255); // Set fill once per vertex
+
+          const xCoordinate = x * this.scale - this.widthHalf;
+          const yCoordinate = y * this.scale - this.heightHalf;
+          p.vertex(xCoordinate, yCoordinate, currentElevation);
+          p.vertex(xCoordinate + this.scale, yCoordinate, nextElevation);
+        }
+        p.endShape();
+      }
+    }
+  }
 }
