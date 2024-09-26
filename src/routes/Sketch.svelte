@@ -52,11 +52,11 @@
 <div>
   <p>{name}</p>
 
-  <div class="flex justify-center" id={`canvas-${sketchId}`}></div>
+  <div class="mb-1 flex justify-center" id={`canvas-${sketchId}`}></div>
   <div>
-    <button on:click={togglePause}>
+    <button class="bg-gray-800 text-gray-100" on:click={togglePause}>
       {isPaused ? 'Resume' : 'Pause'}
     </button>
-    <button on:click={resetSketch}> Reset </button>
+    <button class="bg-gray-800 text-gray-100" on:click={resetSketch}>Reset</button>
   </div>
 </div>

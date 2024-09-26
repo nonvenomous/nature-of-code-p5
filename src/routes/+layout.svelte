@@ -14,5 +14,8 @@
     <li>
       <a href="/chapter/0/perlinElevation" class="">/perlinElevation</a>
     </li>
+    <li>
+      <a href="/chapter/1" class="">/chapter/1</a>
+    </li>
   </ol>
 </footer>
