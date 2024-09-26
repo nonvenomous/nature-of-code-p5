@@ -13,7 +13,7 @@ export default function sketch(p: p5) {
   let x = 100;
   let y = 100;
   let xspeed = 2.5;
-  let yspeed = 0.5;
+  let yspeed = 2;
 
   const SIZE = 48;
   const RADIUS = SIZE / 2;
@@ -26,6 +26,8 @@ export default function sketch(p: p5) {
     p.line(0, 0, canvasWidth, 0);
     p.line(0, canvasHeight, canvasWidth, canvasHeight);
 
+    p.stroke(55);
+
     x = x + xspeed;
     y = y + yspeed;
 
@@ -36,6 +38,6 @@ export default function sketch(p: p5) {
     }
 
     p.fill(127);
-    p.circle(x, y, 48);
+    p.circle(x, y, SIZE);
   };
 }
