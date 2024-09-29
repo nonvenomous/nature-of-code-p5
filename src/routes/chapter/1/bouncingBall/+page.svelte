@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Sketch from '../../../SketchLegacy.svelte';
+  import Sketch from '../../../../lib/SketchLegacy.svelte';
 </script>
 
 <Sketch name="01-bouncingBall" />

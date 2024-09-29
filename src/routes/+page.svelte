@@ -3,7 +3,7 @@
   import type { GaussSplatterData } from '$lib/sketches/00gaussPaintSlatter';
   import type { PerlinMandalaData } from '$lib/sketches/00perlinMandala';
   import type { SketchData } from '$lib/sketches/sketch3';
-  import Sketch from './SketchLegacy.svelte';
+  import Sketch from '../lib/SketchLegacy.svelte';
 
   let sketch3ControlsData: SketchData = $state({
     x: 50,
