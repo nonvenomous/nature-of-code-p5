@@ -2,6 +2,8 @@
   "name": "svelte-p5-nature-of-code",
   "version": "0.0.1",
   "private": true,
+  "author": "nonvenomous",
+  "license": "MIT",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
