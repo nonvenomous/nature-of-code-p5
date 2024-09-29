@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PerlinElevationsData } from '$lib/sketches/00-3DperlinElevations';
-  import Sketch from '../../../Sketch.svelte';
+  import Sketch from '../../../SketchLegacy.svelte';
 
   const perlin3DData: PerlinElevationsData = $state({});
 </script>

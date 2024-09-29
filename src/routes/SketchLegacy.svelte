@@ -1,4 +1,3 @@
-<!-- Sketch.svelte -->
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import p5 from 'p5';
@@ -8,7 +7,7 @@
   export let onUpdate: (data: { [key: string]: any }) => void = () => {};
 
   let p5Instance: p5;
-  let sketchId: string = Math.random().toString(36).substring(7); // You can change this for a uuidv4 !
+  let sketchId: string = Math.random().toString(36).substring(7);
   let isRunning: boolean = true;
   let isPaused: boolean = false;
 

@@ -1,4 +1,6 @@
-<slot></slot>
+<main class="mx-auto max-w-[none] text-center">
+  <slot></slot>
+</main>
 
 <footer class="flex-shrink-0 bg-gray-700 p-4">
   <ol
@@ -8,7 +10,14 @@
       <a href="/" class="">/</a>
     </li>
     <li>
+      <a href="/chapter/1/" class="">/chapter/1/</a>
+    </li>
+
+    <li>
       <a href="/chapter/1/bouncingBall" class="">/chapter/1/bouncingBall</a>
+    </li>
+    <li>
+      <a href="/chapter/1/randomWalkerVectors" class="">/chapter/1/randomWalkerVectors</a>
     </li>
   </ol>
 </footer>
