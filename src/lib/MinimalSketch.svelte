@@ -4,10 +4,12 @@
 
   const canvasWidth = 400;
   const canvasHeight = 200;
+  const fps = 120;
 
   function sketch(p: p5) {
     p.setup = () => {
       p.createCanvas(canvasWidth, canvasHeight);
+      p.frameRate(fps);
       p.background(55);
     };
 

@@ -19,8 +19,8 @@ export default function sketch(p: p5) {
   };
 
   p.draw = function () {
-    walker.step();
     walker.show();
+    walker.step();
   };
 
   // TODO add constraints p.constrain
@@ -43,6 +43,7 @@ export default function sketch(p: p5) {
     }
 
     step() {
+      // strategy
       this.perlinNoise();
     }
 
@@ -143,6 +144,32 @@ export default function sketch(p: p5) {
         this.y++;
       } else {
         this.y--;
+      }
+    }
+
+    strategyFloat() {
+      this.x += p.random(-1, 1);
+      this.y += p.random(-1, 1);
+    }
+
+    strategyInteger() {
+      const r = Math.floor(p.random(4));
+
+      switch (r) {
+        case 0:
+          this.x += 1;
+          break;
+        case 1:
+          this.x -= 1;
+          break;
+        case 2:
+          this.y += 1;
+          break;
+        case 3:
+          this.y -= 1;
+          break;
+        default:
+          throw new Error('uncaught case');
       }
     }
   }
