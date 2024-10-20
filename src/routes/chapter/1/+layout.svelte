@@ -12,12 +12,14 @@
     <li>
       <a href="/chapter/1/" class="">/chapter/1/</a>
     </li>
-
     <li>
       <a href="/chapter/1/bouncingBall" class="">/chapter/1/bouncingBall</a>
     </li>
     <li>
       <a href="/chapter/1/randomWalkerVectors" class="">/chapter/1/randomWalkerVectors</a>
+    </li>
+    <li>
+      <a href="/chapter/1/bouncingBall3D" class="">/chapter/1/bouncingBall3D</a>
     </li>
   </ol>
 </footer>
