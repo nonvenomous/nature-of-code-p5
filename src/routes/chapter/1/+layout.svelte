@@ -21,5 +21,8 @@
     <li>
       <a href="/chapter/1/bouncingBall3D" class="">/chapter/1/bouncingBall3D</a>
     </li>
+    <li>
+      <a href="/chapter/1/example1.3" class="">/chapter/1/example1.3</a>
+    </li>
   </ol>
 </footer>

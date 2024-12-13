@@ -45,7 +45,6 @@
       }
       p.fill(200);
 
-      // p.circle(position.x, position.y, SIZE);
       p.push();
       p.translate(position);
       p.rotateX(theta);
