@@ -1,28 +1,27 @@
+<script lang="ts">
+  const chapterLinks = [
+    'bouncingBall',
+    'randomWalkerVectors',
+    'bouncingBall3D',
+    'example1.3',
+    'example1.5',
+    'example1.6',
+  ] as const;
+</script>
+
 <main class="mx-auto max-w-[none] text-center">
   <slot></slot>
 </main>
 
 <footer class="flex-shrink-0 bg-gray-700 p-4">
+  Chapter 1 links
   <ol
     class="block list-inside list-disc rounded-lg bg-gray-800 p-4 text-left text-base font-bold text-white"
   >
-    <li>
-      <a href="/" class="">/</a>
-    </li>
-    <li>
-      <a href="/chapter/1/" class="">/chapter/1/</a>
-    </li>
-    <li>
-      <a href="/chapter/1/bouncingBall" class="">/chapter/1/bouncingBall</a>
-    </li>
-    <li>
-      <a href="/chapter/1/randomWalkerVectors" class="">/chapter/1/randomWalkerVectors</a>
-    </li>
-    <li>
-      <a href="/chapter/1/bouncingBall3D" class="">/chapter/1/bouncingBall3D</a>
-    </li>
-    <li>
-      <a href="/chapter/1/example1.3" class="">/chapter/1/example1.3</a>
-    </li>
+    {#each chapterLinks as link}
+      <li>
+        <a href={`/chapter/1/${link}`}>{link}</a>
+      </li>
+    {/each}
   </ol>
 </footer>
