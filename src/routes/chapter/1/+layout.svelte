@@ -7,6 +7,7 @@
     'example1.5',
     'example1.6',
     'mover',
+    'exercise1.5',
   ] as const;
 </script>
 
