@@ -6,6 +6,7 @@
     'example1.3',
     'example1.5',
     'example1.6',
+    'mover',
   ] as const;
 </script>
 
