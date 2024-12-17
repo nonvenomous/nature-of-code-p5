@@ -1,9 +1,9 @@
-import type p5 from 'p5';
+import p5 from 'p5';
 
 // This sketch illustrates the use of p5 global, and TypeScript for the definition of a class
 
 // p : instance mode, P5 : Global mode
-export default function sketch(p: p5, P5: p5) {
+export default function sketch(p: p5) {
   let ball: Ball;
 
   p.setup = function () {
@@ -24,7 +24,7 @@ export default function sketch(p: p5, P5: p5) {
 
     constructor(x: number, y: number) {
       this.position = p.createVector(x, y);
-      this.velocity = P5.Vector.random2D().mult(2);
+      this.velocity = p5.Vector.random2D().mult(2);
       this.radius = 10;
     }
 

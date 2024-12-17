@@ -35,7 +35,7 @@ export default function sketch(
     p.background(220);
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(14);
-    p.text('Two way bindings, clic anywhere on the canvas', p.width / 2, p.height / 2);
+    p.text('Two way bindings, click anywhere on the canvas', p.width / 2, p.height / 2);
     p.fill(data.color);
     p.ellipse(data.x, data.y, 20);
   };
