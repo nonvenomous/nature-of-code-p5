@@ -1,0 +1,20 @@
+{
+  "editor.rulers": [100]
+  // "editor.codeActionsOnSave": {
+  //   "source.fixAll": "never",
+  //   "source.fixAll.eslint": "never"
+  // },
+  // // Specific to ESLint Prettier
+  // "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  // "editor.formatOnType": false, // required
+  // "editor.formatOnPaste": true, // optional
+  // "editor.formatOnSave": true, // optional
+  // "editor.formatOnSaveMode": "file", // required to format on save
+  // // less annoying eslint
+  // "eslint.run": "onSave",
+  // // "files.autoSave": "onFocusChange", // optional but recommended
+  // "vs-code-prettier-eslint.prettierLast": true,
+  // "[tailwindcss]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // }
+}
