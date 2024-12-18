@@ -9,6 +9,7 @@
     'mover',
     'exercise1.5',
     'moverFollowMouse',
+    'exercise1.6',
   ] as const;
 </script>
 
