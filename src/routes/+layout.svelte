@@ -17,5 +17,8 @@
     <li>
       <a href="/chapter/1" class="">/chapter/1</a>
     </li>
+    <li>
+      <a href="/chapter/2" class="">/chapter/2</a>
+    </li>
   </ol>
 </footer>
