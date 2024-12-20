@@ -1,5 +1,5 @@
 <script lang="ts">
-  const chapterLinks = ['exercise2.1'] as const;
+  const chapterLinks = ['exercise2.1', 'example2.2'] as const;
 </script>
 
 <main class="mx-auto max-w-[none] text-center">
