@@ -23,6 +23,7 @@
 
     applyForce(force: p5.Vector) {
       let f = p5.Vector.copy(force);
+      f.div(this.mass);
       this.acceleration.add(f);
     }
 
@@ -38,12 +39,24 @@
       this.applyForce(forcePushingLeft);
     }
 
+    private mouseWind(p: p5) {
+      p.line(p.mouseX, p.mouseY, this.position.x, this.position.y);
+      const mouse = p.createVector(p.mouseX, p.mouseY);
+      mouse.sub(this.position);
+      mouse.setMag(0.3);
+      mouse.mult(-1);
+      this.applyForce(mouse);
+    }
+
     private radius() {
       return this.mass * 8;
     }
 
     update(p: p5) {
       this.wallForce(p);
+      if (p.mouseIsPressed) {
+        this.mouseWind(p);
+      }
       this.velocity.add(this.acceleration);
       this.velocity.limit(this.topSpeed);
       this.position.add(this.velocity);
@@ -74,6 +87,7 @@
       }
     }
   }
+
   let moverA: Mover;
   let moverB: Mover;
 
@@ -91,12 +105,6 @@
       let gravity = p.createVector(0, 0.1);
       moverA.applyForce(gravity);
       moverB.applyForce(gravity);
-
-      if (p.mouseIsPressed) {
-        let wind = p.createVector(0.1, 0);
-        moverA.applyForce(wind);
-        moverB.applyForce(wind);
-      }
 
       moverA.update(p);
       moverA.checkEdges();
