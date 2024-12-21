@@ -26,7 +26,24 @@
       this.acceleration.add(f);
     }
 
-    update() {
+    private wallForce(p: p5) {
+      const nearnessToLeftWall = this.position.x;
+      const mappedA = p.map(nearnessToLeftWall, canvasWidth, 0, 0.05, 0);
+      const nearnessToRightWall = Math.abs(this.position.x - canvasWidth);
+      const mappedB = p.map(nearnessToRightWall, canvasWidth, 0, 0.05, 0);
+
+      const forcePushingRight = p.createVector(-mappedA);
+      const forcePushingLeft = p.createVector(mappedB);
+      this.applyForce(forcePushingRight);
+      this.applyForce(forcePushingLeft);
+    }
+
+    private radius() {
+      return this.mass * 8;
+    }
+
+    update(p: p5) {
+      this.wallForce(p);
       this.velocity.add(this.acceleration);
       this.velocity.limit(this.topSpeed);
       this.position.add(this.velocity);
@@ -36,23 +53,23 @@
     show(p: p5) {
       p.stroke(0);
       p.fill(175);
-      p.circle(this.position.x, this.position.y, this.mass * 16);
+      p.circle(this.position.x, this.position.y, this.radius() * 2);
     }
 
     checkEdges() {
-      if (this.position.x > canvasWidth) {
-        this.position.x = canvasWidth;
+      if (this.position.x + this.radius() > canvasWidth) {
+        this.position.x = canvasWidth - this.radius();
         this.velocity.x *= -1;
-      } else if (this.position.x < 0) {
-        this.position.x = 0;
+      } else if (this.position.x - this.radius() < 0) {
+        this.position.x = this.radius();
         this.velocity.x *= -1;
       }
 
-      if (this.position.y > canvasHeight) {
-        this.position.y = canvasHeight;
+      if (this.position.y + this.radius() > canvasHeight) {
+        this.position.y = canvasHeight - this.radius();
         this.velocity.y *= -1;
-      } else if (this.position.y < 0) {
-        this.position.y = 0;
+      } else if (this.position.y - this.radius() < 0) {
+        this.position.y = this.radius();
         this.velocity.y *= -1;
       }
     }
@@ -64,7 +81,7 @@
     p.setup = () => {
       p.createCanvas(canvasWidth, canvasHeight);
       p.frameRate(fps);
-      moverA = new Mover(p, 100, 30, 10);
+      moverA = new Mover(p, 200, 30, 10);
       moverB = new Mover(p, 400, 30, 2);
     };
 
@@ -81,10 +98,10 @@
         moverB.applyForce(wind);
       }
 
-      moverA.update();
+      moverA.update(p);
       moverA.checkEdges();
       moverA.show(p);
-      moverB.update();
+      moverB.update(p);
       moverB.checkEdges();
       moverB.show(p);
     };
@@ -95,4 +112,4 @@
 
 <Sketch sketchFunction={sketch} />
 
-<p>Mover class utilzing different algorithms</p>
+<p>Movers with mass, walls with force, wind on mouse click</p>
