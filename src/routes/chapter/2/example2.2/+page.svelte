@@ -4,7 +4,7 @@
 
   const canvasWidth = 600;
   const canvasHeight = 300;
-  const fps = 120;
+  const fps = 60;
 
   class Mover {
     position: p5.Vector;
@@ -96,15 +96,20 @@
       p.createCanvas(canvasWidth, canvasHeight);
       p.frameRate(fps);
       moverA = new Mover(p, 200, 30, 10);
-      moverB = new Mover(p, 400, 30, 2);
+      moverB = new Mover(p, 400, 60, 2);
     };
 
     p.draw = () => {
       p.background(55);
 
       let gravity = p.createVector(0, 0.1);
-      moverA.applyForce(gravity);
-      moverB.applyForce(gravity);
+
+      const gravityB = p5.Vector.mult(gravity, moverB.mass);
+      // @ts-expect-error wrong type
+      moverB.applyForce(gravityB);
+      const gravityA = p5.Vector.mult(gravity, moverA.mass);
+      // @ts-expect-error wrong type
+      moverA.applyForce(gravityA);
 
       moverA.update(p);
       moverA.checkEdges();
