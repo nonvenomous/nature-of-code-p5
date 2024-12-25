@@ -5,11 +5,12 @@
 
   const canvasWidth = 600;
   const canvasHeight = 300;
-  const fps = 120;
+  const fps = 60;
 
-  // const normalForce = 1;
-  const frictionCoefficient = 0.1;
   const GRAVITY = 0.5;
+  // arbitrary constants
+  // const NORMAL_FORCE = 1;
+  const FRICTION_COEFFICIENT = 0.1;
 
   class Mover {
     position: p5.Vector;
@@ -35,8 +36,8 @@
     }
 
     contactEdge() {
-      // TODO: why -1 in contactEdge
-      return this.position.y > canvasHeight - this.radius() - 1;
+      const isWithin1PixelOfBottom = this.position.y + this.radius() > canvasHeight - 1;
+      return isWithin1PixelOfBottom;
     }
 
     bounceEdges() {
@@ -47,7 +48,7 @@
       }
     }
 
-    update(p: p5) {
+    update() {
       this.velocity.add(this.acceleration);
       this.position.add(this.velocity);
       this.acceleration.mult(0);
@@ -60,15 +61,14 @@
     }
   }
 
-  let moverA: Mover;
-  let moverB: Mover;
-
   function sketch(p: p5) {
+    const movers: Mover[] = [];
+
     p.setup = () => {
       p.createCanvas(canvasWidth, canvasHeight);
       p.frameRate(fps);
-      moverA = new Mover(p, 200, 30, 5);
-      moverB = new Mover(p, 400, 30, 10);
+      movers.push(new Mover(p, 200, 30, 5));
+      movers.push(new Mover(p, 400, 30, 10));
     };
 
     p.draw = () => {
@@ -76,39 +76,29 @@
 
       const gravity = p.createVector(0, GRAVITY);
 
-      const gravityA = p5.Vector.mult(gravity, moverA.mass) as unknown as p5.Vector;
-      moverA.applyForce(gravityA);
+      for (const mover of movers) {
+        const moverGravity = p5.Vector.mult(gravity, mover.mass) as unknown as p5.Vector;
+        mover.applyForce(moverGravity);
 
-      const gravityB = p5.Vector.mult(gravity, moverB.mass) as unknown as p5.Vector;
-      moverB.applyForce(gravityB);
+        if (p.mouseIsPressed) {
+          const wind = p.createVector(0.5, 0);
+          mover.applyForce(wind);
+        }
 
-      if (p.mouseIsPressed) {
-        const wind = p.createVector(0.5, 0);
-        moverA.applyForce(wind);
-        moverB.applyForce(wind);
+        if (mover.contactEdge()) {
+          const friction = mover.velocity.copy();
+          friction.mult(-1);
+          const normalForce = mover.mass;
+          // const FRICTION_MAGNITUDE = FRICTION_COEFFICIENT * NORMAL_FORCE;
+          const FRICTION_MAGNITUDE = FRICTION_COEFFICIENT * normalForce; // accounts for mass
+          friction.setMag(FRICTION_MAGNITUDE); // == normalize && mult
+          mover.applyForce(friction);
+        }
+
+        mover.bounceEdges();
+        mover.update();
+        mover.show(p);
       }
-
-      if (moverA.contactEdge()) {
-        const friction = moverA.velocity.copy();
-        friction.mult(-1);
-        // TODO: understand frictionCoefficient
-        friction.setMag(frictionCoefficient);
-        moverA.applyForce(friction);
-      }
-
-      if (moverB.contactEdge()) {
-        const friction = moverB.velocity.copy();
-        friction.mult(-1);
-        friction.setMag(frictionCoefficient);
-        moverB.applyForce(friction);
-      }
-
-      moverA.bounceEdges();
-      moverA.update(p);
-      moverA.show(p);
-      moverB.bounceEdges();
-      moverB.update(p);
-      moverB.show(p);
     };
   }
 </script>
