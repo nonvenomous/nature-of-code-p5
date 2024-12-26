@@ -36,7 +36,7 @@
     }
 
     contactEdge() {
-      const isWithin1PixelOfBottom = this.position.y + this.radius() > canvasHeight - 1;
+      const isWithin1PixelOfBottom = this.position.y > canvasHeight - this.radius() - 1;
       return isWithin1PixelOfBottom;
     }
 
@@ -45,6 +45,16 @@
       if (this.position.y > canvasHeight - this.radius()) {
         this.position.y = canvasHeight - this.radius();
         this.velocity.y *= bounce;
+      } else if (this.position.y < this.radius()) {
+        this.position.y = this.radius();
+        this.velocity.y *= bounce;
+      }
+      if (this.position.x > canvasWidth - this.radius()) {
+        this.position.x = canvasWidth - this.radius();
+        this.velocity.x *= bounce;
+      } else if (this.position.x < this.radius()) {
+        this.position.x = this.radius();
+        this.velocity.x *= bounce;
       }
     }
 
@@ -71,34 +81,46 @@
       movers.push(new Mover(p, 400, 30, 10));
     };
 
+    let dragEvent: any;
+
+    p.mouseDragged = (event) => {
+      dragEvent = event;
+    };
+
     p.draw = () => {
       p.background(55);
 
       const gravity = p.createVector(0, GRAVITY);
 
       for (const mover of movers) {
-        const moverGravity = p5.Vector.mult(gravity, mover.mass) as unknown as p5.Vector;
-        mover.applyForce(moverGravity);
-
-        if (p.mouseIsPressed) {
-          const wind = p.createVector(0.5, 0);
-          mover.applyForce(wind);
+        if (!p.mouseIsPressed) {
+          const moverGravity = p5.Vector.mult(gravity, mover.mass) as unknown as p5.Vector;
+          mover.applyForce(moverGravity);
         }
 
         if (mover.contactEdge()) {
           const friction = mover.velocity.copy();
-          friction.mult(-1);
-          const normalForce = mover.mass;
-          // const FRICTION_MAGNITUDE = FRICTION_COEFFICIENT * NORMAL_FORCE;
-          const FRICTION_MAGNITUDE = FRICTION_COEFFICIENT * normalForce; // accounts for mass
+          friction.mult(-1); // opposite direction of velocity
+          const normalForce = mover.mass; // normal force propotional to mass
+          const FRICTION_MAGNITUDE = FRICTION_COEFFICIENT * normalForce;
+
           friction.setMag(FRICTION_MAGNITUDE); // == normalize && mult
           mover.applyForce(friction);
         }
 
+        if (p.mouseIsPressed && dragEvent) {
+          const mouseMovementV = p.createVector(dragEvent.movementX, dragEvent.movementY);
+          mouseMovementV.mult(0.5);
+          mover.velocity.add(mouseMovementV);
+        }
+        if (p.mouseIsPressed && !dragEvent) {
+          mover.velocity.setMag(0);
+        }
         mover.bounceEdges();
         mover.update();
         mover.show(p);
       }
+      dragEvent = null;
     };
   }
 </script>
@@ -106,3 +128,8 @@
 <h2>Example 2.4</h2>
 
 <Sketch sketchFunction={sketch} />
+
+<p>
+  <span>Includes exercise 2.7 (interaction by mouse tossing)</span>
+  <span>Manages movers in an array</span>
+</p>
