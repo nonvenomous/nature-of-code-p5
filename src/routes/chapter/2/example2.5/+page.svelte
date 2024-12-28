@@ -2,24 +2,32 @@
   import Sketch from '$lib/Sketch.svelte';
   import p5 from 'p5';
   import { Mover } from '../Mover';
+  import { Liquid } from '../Liquid';
 
-  const canvasWidth = 600;
+  const canvasWidth = 640;
   const canvasHeight = 300;
   const fps = 60;
 
-  const GRAVITY = 0.5;
-  // arbitrary constants
-  // const NORMAL_FORCE = 1;
-  const FRICTION_COEFFICIENT = 0.1;
+  const GRAVITY = 0.1;
 
   function sketch(p: p5) {
     const movers: Mover[] = [];
 
+    let liquid: Liquid;
+
     p.setup = () => {
       p.createCanvas(canvasWidth, canvasHeight);
       p.frameRate(fps);
-      movers.push(new Mover(p, 200, 30, 5));
-      movers.push(new Mover(p, 400, 30, 10));
+
+      liquid = new Liquid(p, 0, canvasHeight / 2, canvasWidth, canvasHeight / 2, 0.2);
+
+      // movers.push(new Mover(p, 200, 30, 3));
+      // movers.push(new Mover(p, 400, 30, 5));
+      //
+      for (let i = 0; i < 9; i++) {
+        let mass = p.random(0.1, 3);
+        movers[i] = new Mover(p, 40 + i * 70, 0, mass);
+      }
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,22 +40,18 @@
     p.draw = () => {
       p.background(55);
 
+      liquid.show();
       const gravity = p.createVector(0, GRAVITY);
 
       for (const mover of movers) {
+        if (liquid.contains(mover)) {
+          console.log('liquid contains mover, applying dragForce');
+          const dragForce = liquid.calculateDrag(mover);
+          mover.applyForce(dragForce);
+        }
         if (!p.mouseIsPressed) {
           const moverGravity = p5.Vector.mult(gravity, mover.mass) as unknown as p5.Vector;
           mover.applyForce(moverGravity);
-        }
-
-        if (mover.contactEdge()) {
-          const friction = mover.velocity.copy();
-          friction.mult(-1); // opposite direction of velocity
-          const normalForce = mover.mass; // normal force propotional to mass
-          const FRICTION_MAGNITUDE = FRICTION_COEFFICIENT * normalForce;
-
-          friction.setMag(FRICTION_MAGNITUDE); // == normalize && mult
-          mover.applyForce(friction);
         }
 
         if (p.mouseIsPressed && dragEvent) {
