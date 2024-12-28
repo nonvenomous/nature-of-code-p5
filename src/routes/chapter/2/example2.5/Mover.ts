@@ -6,13 +6,15 @@ export class Mover {
   acceleration: p5.Vector;
   mass: number;
   p: p5;
+  isBox: boolean;
 
-  constructor(p: p5, x: number, y: number, mass: number) {
+  constructor(p: p5, x: number, y: number, mass: number, isBox = false) {
     this.position = p.createVector(x, y);
     this.velocity = p.createVector(0, 0);
     this.acceleration = p.createVector(0, 0);
     this.mass = mass;
     this.p = p;
+    this.isBox = isBox;
   }
 
   applyForce(force: p5.Vector) {
@@ -21,7 +23,7 @@ export class Mover {
     this.acceleration.add(f);
   }
 
-  private radius() {
+  radius() {
     return this.mass * 8;
   }
 
@@ -50,7 +52,7 @@ export class Mover {
 
   update() {
     this.velocity.add(this.acceleration);
-    this.velocity.limit(4);
+    this.velocity.limit(5);
     this.position.add(this.velocity);
     this.acceleration.mult(0);
   }
@@ -58,6 +60,11 @@ export class Mover {
   show(p: p5) {
     p.stroke(0);
     p.fill(175);
-    p.circle(this.position.x, this.position.y, this.radius() * 2);
+    if (!this.isBox) {
+      p.circle(this.position.x, this.position.y, this.radius() * 2);
+    }
+    if (this.isBox) {
+      p.square(this.position.x, this.position.y, this.radius());
+    }
   }
 }

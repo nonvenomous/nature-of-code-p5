@@ -2,14 +2,14 @@
   import Sketch from '$lib/Sketch.svelte';
   import p5 from 'p5';
   import { Mover } from './Mover';
-  import { Liquid } from '../Liquid';
+  import { Liquid } from './Liquid';
 
   const canvasWidth = 640;
   const canvasHeight = 300;
   const fps = 60;
 
   const GRAVITY = 0.1;
-  const DRAG_COEFFICIENT = 0.2;
+  const DRAG_COEFFICIENT = 0.6;
 
   function sketch(p: p5) {
     const movers: Mover[] = [];
@@ -24,7 +24,8 @@
 
       for (let i = 0; i < 9; i++) {
         let mass = p.random(0.5, 3);
-        movers[i] = new Mover(p, 40 + i * 70, 0, mass);
+        const boxChance = p.random() > 0.7;
+        movers[i] = new Mover(p, 40 + i * 70, 0, mass, boxChance);
       }
     };
 
@@ -76,4 +77,6 @@
   <span
     >Completes exercise 2.8, implementing a limit to prevent movers from bouncing due to coefficient</span
   >
+
+  <span>Adds boxes with scaled drag friction with surface area</span>
 </p>

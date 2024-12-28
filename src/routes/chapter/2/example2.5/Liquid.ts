@@ -30,8 +30,14 @@ export class Liquid {
   }
 
   calculateDrag(mover: Mover) {
+    const radiusOrSide = mover.radius(); // radius for circle, side length for square
+    const surfaceArea = mover.isBox
+      ? Math.pow(radiusOrSide, 2)
+      : (Math.PI * Math.pow(radiusOrSide, 2)) / 2;
+    const scaledSurfaceArea = surfaceArea / 1000;
+
     const speed = mover.velocity.mag();
-    const dragMagnitude = this.coefficientOfDrag * speed * speed;
+    const dragMagnitude = this.coefficientOfDrag * scaledSurfaceArea * Math.pow(speed, 2);
     const dragForce = mover.velocity.copy();
     dragForce.mult(-1);
     dragForce.setMag(dragMagnitude);
