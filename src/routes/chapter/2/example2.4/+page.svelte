@@ -1,15 +1,13 @@
 <script lang="ts">
   import Sketch from '$lib/Sketch.svelte';
   import p5 from 'p5';
-  import { Mover } from '../Mover';
+  import { Mover } from './Mover';
 
   const canvasWidth = 600;
   const canvasHeight = 300;
   const fps = 60;
 
   const GRAVITY = 0.5;
-  // arbitrary constants
-  // const NORMAL_FORCE = 1;
   const FRICTION_COEFFICIENT = 0.1;
 
   function sketch(p: p5) {
@@ -55,9 +53,11 @@
           mouseMovementV.mult(0.5);
           mover.velocity.add(mouseMovementV);
         }
+
         if (p.mouseIsPressed && !dragEvent) {
           mover.velocity.setMag(0);
         }
+
         mover.bounceEdges();
         mover.update();
         mover.show(p);
@@ -71,7 +71,8 @@
 
 <Sketch sketchFunction={sketch} />
 
-<p>
+<p class="flex flex-col">
   <span>Includes exercise 2.7 (interaction by mouse tossing)</span>
+  <span>Contact edge friction</span>
   <span>Manages movers in an array</span>
 </p>

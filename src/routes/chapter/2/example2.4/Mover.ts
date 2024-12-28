@@ -50,6 +50,7 @@ export class Mover {
 
   update() {
     this.velocity.add(this.acceleration);
+    this.velocity.limit(30);
     this.position.add(this.velocity);
     this.acceleration.mult(0);
   }
