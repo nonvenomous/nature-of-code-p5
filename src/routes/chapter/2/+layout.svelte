@@ -1,5 +1,11 @@
 <script lang="ts">
-  const chapterLinks = ['exercise2.1', 'example2.2', 'example2.4', 'example2.5'] as const;
+  const chapterLinks = [
+    'exercise2.1',
+    'example2.2',
+    'example2.4',
+    'example2.5',
+    'gravitationalAttractors',
+  ] as const;
 </script>
 
 <main class="mx-auto max-w-[none] text-center">
