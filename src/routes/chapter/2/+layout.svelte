@@ -7,6 +7,7 @@
     'gravitationalAttractors',
     'twoBodyAttraction',
     'exercise2.15',
+    'spiralGalaxy',
   ] as const;
 </script>
 
