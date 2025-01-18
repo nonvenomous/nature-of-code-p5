@@ -6,6 +6,7 @@
     'example2.5',
     'gravitationalAttractors',
     'twoBodyAttraction',
+    'exercise2.15',
   ] as const;
 </script>
 
