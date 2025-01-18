@@ -9,23 +9,24 @@
 
   function sketch(p: p5) {
     const bodies: Body[] = [];
+    const NUM_OF_BODIES = 10;
 
     p.setup = () => {
       p.createCanvas(canvasWidth, canvasHeight);
       p.frameRate(fps);
 
-      bodies[0] = new Body(p, 320, 40, 3);
-      bodies[1] = new Body(p, 320, 320, 3);
-      bodies[2] = new Body(p, 100, 180, 3);
-
-      bodies[0].velocity = p.createVector(1, 0);
-      bodies[1].velocity = p.createVector(-1, 0);
-      bodies[2].velocity = p.createVector(0, 0);
+      for (let i = 0; i < NUM_OF_BODIES; i++) {
+        const x = p.random(0, canvasWidth);
+        const y = p.random(0, canvasHeight);
+        const size = p.random(1, 3);
+        bodies.push(new Body(p, x, y, size));
+      }
     };
 
     p.draw = () => {
       p.background(55);
 
+      // n-squared algorithm
       for (const body of bodies) {
         for (const otherBody of bodies) {
           if (otherBody === body) continue;
@@ -44,5 +45,6 @@
 
 <p class="flex flex-col">
   <span>includes example 2.8 two-body attraction</span>
+  <span>includes example 2.9 n-body attraction</span>
   <span>completes exercise 2.14 adding a third body</span>
 </p>
