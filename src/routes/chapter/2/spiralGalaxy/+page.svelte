@@ -63,7 +63,7 @@
   }
 </script>
 
-<h2>Spiral Galaxy - Mutural Attract</h2>
+<h2>Spiral Galaxy - Mutual Attract</h2>
 
 <Sketch sketchFunction={sketch} />
 

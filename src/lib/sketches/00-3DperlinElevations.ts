@@ -1,14 +1,16 @@
 import type p5 from 'p5';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export type PerlinElevationsData = {};
+export type PerlinElevationsData = {
+  width?: number;
+  height?: number;
+};
 
 // Exercise 0.10
 // _: p5, data: PerlinElevationsData
-export default function sketch(p: p5) {
+export default function sketch(p: p5, _: p5, data: PerlinElevationsData) {
   const frameRate = 60;
-  const canvasWidth = 500;
-  const canvasHeight = 400;
+  const canvasWidth = data.width || 500;
+  const canvasHeight = data.height || 400;
 
   let land: Terrain;
   let theta = 0.0;

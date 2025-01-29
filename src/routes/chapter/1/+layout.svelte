@@ -1,4 +1,7 @@
 <script lang="ts">
+  import ChapterNav from '$lib/ChapterNav.svelte';
+
+  const chapterNumber = 1;
   const chapterLinks = [
     'bouncingBall',
     'randomWalkerVectors',
@@ -10,22 +13,11 @@
     'exercise1.5',
     'moverFollowMouse',
     'exercise1.6',
-  ] as const;
+  ];
 </script>
 
-<main class="mx-auto max-w-[none] text-center">
-  <slot></slot>
+<main class="mx-auto max-w-4xl px-6 py-8 text-center text-neutral-200">
+  <slot />
 </main>
 
-<footer class="flex-shrink-0 bg-gray-700 p-4">
-  Chapter 1 links
-  <ol
-    class="block list-inside list-disc rounded-lg bg-gray-800 p-4 text-left text-base font-bold text-white"
-  >
-    {#each chapterLinks as link}
-      <li>
-        <a href={`/chapter/1/${link}`}>{link}</a>
-      </li>
-    {/each}
-  </ol>
-</footer>
+<ChapterNav {chapterNumber} links={chapterLinks} />

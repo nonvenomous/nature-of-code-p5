@@ -6,11 +6,13 @@ export type PerlinMandalaData = {
   strokeWeight: number;
   enableDarken: boolean;
   enableTurning: boolean;
+  width?: number;
+  height?: number;
 };
 
 export default function sketch(p: p5, _: p5, data: PerlinMandalaData) {
-  const canvasWidth = 1560;
-  const canvasHeight = 1560;
+  const canvasWidth = data.width || 1560;
+  const canvasHeight = data.height || 1560;
 
   const middleXWidth = canvasWidth / 2;
   const middleYHeight = canvasHeight / 2;
@@ -25,19 +27,17 @@ export default function sketch(p: p5, _: p5, data: PerlinMandalaData) {
     p.background(55);
 
     p.stroke(0);
-
-    // p.line(middleXWidth, 0, middleXWidth, canvasHeight);
-    // p.line(0, middleYHeight, canvasWidth, middleYHeight);
   };
 
   p.draw = () => {
-    p.strokeWeight(data.strokeWeight);
     p.frameRate(data.frameRate);
 
     if (data.enableDarken) {
+      p.strokeWeight(0);
       p.fill(0, 0, 0, 2);
       p.rect(0, 0, canvasWidth, canvasHeight);
     }
+    p.strokeWeight(data.strokeWeight);
 
     const noiseA = p.noise(time);
     const noiseB = p.noise(btime);

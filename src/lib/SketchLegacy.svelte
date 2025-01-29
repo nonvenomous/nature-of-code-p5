@@ -3,6 +3,7 @@
   import p5 from 'p5';
 
   export let name: string;
+  export let omitControls = false;
   export let data: { [key: string]: any } = {};
   export let onUpdate: (data: { [key: string]: any }) => void = () => {};
 
@@ -49,13 +50,17 @@
 </script>
 
 <div>
-  <p>{name}</p>
+  {#if !omitControls}
+    <p>{name}</p>
+  {/if}
 
   <div class="mb-1 flex justify-center" id={`canvas-${sketchId}`}></div>
-  <div>
-    <button class="bg-gray-800 text-gray-100" on:click={togglePause}>
-      {isPaused ? 'Resume' : 'Pause'}
-    </button>
-    <button class="bg-gray-800 text-gray-100" on:click={resetSketch}>Reset</button>
-  </div>
+  {#if !omitControls}
+    <div>
+      <button class="bg-gray-800 text-gray-100" on:click={togglePause}>
+        {isPaused ? 'Resume' : 'Pause'}
+      </button>
+      <button class="bg-gray-800 text-gray-100" on:click={resetSketch}>Reset</button>
+    </div>
+  {/if}
 </div>
