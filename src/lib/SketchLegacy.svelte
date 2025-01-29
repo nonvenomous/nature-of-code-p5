@@ -56,11 +56,20 @@
 
   <div class="mb-1 flex justify-center" id={`canvas-${sketchId}`}></div>
   {#if !omitControls}
-    <div>
-      <button class="bg-gray-800 text-gray-100" on:click={togglePause}>
-        {isPaused ? 'Resume' : 'Pause'}
-      </button>
-      <button class="bg-gray-800 text-gray-100" on:click={resetSketch}>Reset</button>
-    </div>
+    <button
+      class="rounded-lg bg-neutral-700 px-4 py-2 font-semibold text-neutral-100 transition
+       hover:bg-neutral-600 focus:ring-2 focus:ring-neutral-500 active:scale-95"
+      onclick={togglePause}
+    >
+      {isPaused ? 'Resume' : 'Pause'}
+    </button>
+
+    <button
+      class="rounded-lg bg-red-700 px-4 py-2 font-semibold text-neutral-100 transition
+       hover:bg-red-600 focus:ring-2 focus:ring-red-500 active:scale-95"
+      onclick={resetSketch}
+    >
+      Reset
+    </button>
   {/if}
 </div>

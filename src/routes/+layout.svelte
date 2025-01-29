@@ -7,7 +7,7 @@
   <nav class="flex items-center justify-between bg-neutral-800 px-6 py-4 shadow-md">
     <a href="/" class="text-2xl font-bold text-neutral-300 hover:underline">Nature of Code</a>
     <div class="space-x-4">
-      <a href="/chapter/0/unsorted" class="text-neutral-400 hover:text-neutral-100">Unsorted</a>
+      <a href="/chapter/0/unsorted" class="text-neutral-400 hover:text-neutral-100">Chapter 0</a>
       <a href="/chapter/0/perlinElevation" class="text-neutral-400 hover:text-neutral-100"
         >Perlin Elevation</a
       >
