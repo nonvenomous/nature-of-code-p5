@@ -47,6 +47,12 @@
   </section>
 
   <div class="mt-12 text-sm text-neutral-500">
-    <p>🚀 Built with SvelteKit & Tailwind</p>
+    <p>
+      🚀 Built with SvelteKit & Tailwind | <a
+        href="https://github.com/nonvenomous/nature-of-code-p5"
+        target="_blank"
+        rel="noopener noreferrer">Github Repo</a
+      >
+    </p>
   </div>
 </main>
